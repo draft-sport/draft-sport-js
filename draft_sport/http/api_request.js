@@ -8,8 +8,8 @@ if (GLOBAL_DEBUG_FLAG !== true && GLOBAL_DEBUG_FLAG !== false) {
 
 class ApiRequest {
 
-    static get _KEY_HEADER() { return 'x-procuret-api-key'; }
-    static get _SESSION_ID_HEADER() { return 'x-procuret-session-id'; }
+    static get _KEY_HEADER() { return 'x-draft-sport-api-key'; }
+    static get _SESSION_ID_HEADER() { return 'x-draft-sport-session-id'; }
     static get _API_JSON_HEADER() { return 'application/json;charset=UTF-8'; }
 
     constructor(
