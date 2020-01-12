@@ -18,4 +18,15 @@ class Newsletter {
     get publicId() { return this._publicId; }
     get name() { return this._name; }
 
+    static decodeMany(data) {
+        return data.map((d) => { return Newsletter.decode(d); });
+    }
+
+    static decode(data) {
+        return new Newsletter(
+            data['public_id'],
+            data['name']
+        );
+    }
+
 }
