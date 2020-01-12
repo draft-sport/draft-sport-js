@@ -43,4 +43,11 @@ class CommunicationMode {
         return null;
     }
 
+    static decode(data) {
+        return new CommunicationMode(
+            data['indexid'],
+            data['mode_name']
+        );
+    }
+
 }
