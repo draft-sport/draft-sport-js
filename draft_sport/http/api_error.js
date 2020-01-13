@@ -2,28 +2,28 @@
 
 const ERROR_INFO_KEY = 'error-information';
 const ERROR_CUSTOMER_INFORMATION = {
-    400: "Draft Sport's servers could not understand the information sent by \
+    400: "Draft Rugby's servers could not understand the information sent by \
     your device. This likely indicates a bug in our application. Our support \
     team has been notified automatically, but please feel free to contact \
-    us at support@Draft Sport.com",
-    500: "Draft Sport's servers encountered an error when processing \
+    us at support@draftrugby.com",
+    500: "Draft Rugby's servers encountered an error when processing \
     information send by your device. There may be a bug in our systems, or \
     they may be experiencing a temporary service disruption. Our support team \
     has been notified automatically.",
-    401: "Draft Sport's servers could not identify you when processing \
+    401: "Draft Rugby's servers could not identify you when processing \
     data sent by your device. This likely indicates a bug has crept into \
-    our application. Please contact us at support@Draft Sport.com.",
+    our application. Please contact us at support@draftrugby.com.",
     403: "You don't appear to be authorised to perform the action you \
     were attempting.  This likely indicates a bug has crept into \
-    our application. Please contact us at support@Draft Sport.com.",
-    429: "Draft Sport's servers have noticed unusually high activity levels \
+    our application. Please contact us at support@draftrugby.com.",
+    429: "Draft Rugby's servers have noticed unusually high activity levels \
     from your device or the network it is connected to. Please try again in \
     few minutes. If you continue to see this message, please contact \
-    support@Draft Sport.com",
-    404: "Draft Sport's servers were unable to find a resource needed to \
+    support@draftrugby.com",
+    404: "Draft Rugby's servers were unable to find a resource needed to \
     serve your request. This likely indicates a bug in our application. Our \
     support team has been notified automatically, but please feel free to \
-    contact us at support@Draft Sport.com"
+    contact us at support@draftrugby.com"
 }
 const ERROR_FALLBACK_INFORMATION = "Draft Sport has encountered an error. \
 There may be a bug in our systems, or they may be experiencing a temporary \
