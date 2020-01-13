@@ -29,7 +29,8 @@ class ApiRequest {
         this._callback = callback;
 
         const request = new XMLHttpRequest();
-        if (GLOBAL_DEBUG_FLAG === true) { request.withCredentials = true; }
+        //if (GLOBAL_DEBUG_FLAG === true) { request.withCredentials = true; }
+        request.withCredentials = false;
         this._request = request;
         const self = this;
         request.onreadystatechange = this._parseResponse.bind(self, request)
@@ -134,11 +135,7 @@ class ApiRequest {
             try {
                 errorContent = JSON.parse(request.responseText);
             } catch (error) {
-                const decodeError = new ApiResponseDecodingError(
-                    request.responseText,
-                    error
-                )
-                this._callback(decodeError, null);
+                this._callback(errorContent, null);
                 return;
             }
             const error = new ApiError(status, errorContent);
