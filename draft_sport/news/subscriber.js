@@ -45,7 +45,7 @@ class Subscriber {
 
         const payload = {
             'email': email,
-            'newsletter_id': newsletter.publidId
+            'newsletter_id': newsletter.publicId
         }
 
         const _ = new ApiRequest(
