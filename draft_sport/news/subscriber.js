@@ -28,7 +28,7 @@ class Subscriber {
 
     static decode(data) {
         return new Subscriber(
-            data['publicId'],
+            data['public_id'],
             data['modified'],
             Newsletter.decodeMany(data['newsletters']),
             CommunicationMethod.decodeMany(data['communication_methods'])
