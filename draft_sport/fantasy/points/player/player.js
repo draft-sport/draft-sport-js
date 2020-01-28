@@ -4,6 +4,7 @@
 class PlayerPoints {
 
     static get _LIST_PATH() { return '/fantasy/player/list'; }
+    static get DEFAULT_ORDER_BY() { return PlayerOrderBy.AVERAGE_POINTS; }
 
     constructor(
         player,  // Player instance
@@ -60,19 +61,19 @@ class PlayerPoints {
         callback,  // Function(Error?, Array<PlayerPoints>?)
         limit = 20,  // Integer, Max 20
         offset = 0,  // Integer
-        orderBy = PlayerOrderBy.AVERAGE_POINTS,  // OrderBy
+        orderBy = PlayerPoints.DEFAULT_ORDER_BY,  // OrderBy
         order = Order.DESCENDING,  // Order
         session = null  // Optional[Session]
     ) {
 
         const Self = PlayerPoints;
 
-        // Temporarily ignore Season during dev
         const parameters = new UrlParameters([
             new UrlParameter('offset', offset),
             new UrlParameter('limit', limit),
             new UrlParameter('order_by', orderBy.key),
-            new UrlParameter('order', order.key)
+            new UrlParameter('order', order.key),
+            new UrlParameter('season', season.name)
         ])
     
         const _ = new ApiRequest(
