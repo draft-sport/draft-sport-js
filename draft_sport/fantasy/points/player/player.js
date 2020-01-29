@@ -30,7 +30,7 @@ class PlayerPoints {
 
     }
 
-    get player() { return this._player; }
+    get profile() { return this._player; }
     get points() { return this._points; }
     get limit() { return this._limit; }
     get offset() { return this._offset; }
