@@ -13,7 +13,7 @@ class Player {
 
         this._firstName = firstName;
         this._lastName = lastName;
-        this._teamName = teamName;
+        this._teamName = teamName ? teamName : 'Unknown';
         this._publicId = publicId;
 
         return;
