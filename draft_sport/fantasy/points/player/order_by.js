@@ -12,7 +12,9 @@ class PlayerOrderBy {
 
     static get PLAYER_NAME() { return new PlayerOrderBy('player_name'); }
     static get AVERAGE_POINTS() { return new PlayerOrderBy('average_points'); }
-    static get TOTAL_POINTS() { return new PlayerOrderBy('total_points'); }
+    static get TOTAL_POINTS() {
+        return new PlayerOrderBy('total_season_points');
+    }
     static get POINTS_LAST_ROUND() {
         return new PlayerOrderBy('points_last_round');
     }
