@@ -62,19 +62,26 @@ class PlayerPoints {
         limit = 20,  // Integer, Max 20
         offset = 0,  // Integer
         orderBy = PlayerPoints.DEFAULT_ORDER_BY,  // OrderBy
-        order = Order.DESCENDING,  // Order
+        order = Order.DESCENDING,  // Order,
+        nameFragment = null,  // Optional[String]
         session = null  // Optional[Session]
     ) {
 
         const Self = PlayerPoints;
 
-        const parameters = new UrlParameters([
+        const rawParameters = [
             new UrlParameter('offset', offset),
             new UrlParameter('limit', limit),
             new UrlParameter('order_by', orderBy.key),
             new UrlParameter('order', order.key),
             new UrlParameter('season', season.name)
-        ])
+        ]
+
+        if (nameFragment != null) {
+            rawParameters.push(new UrlParameter('fragment', nameFragment));
+        }
+
+        const parameters = new UrlParameters(rawParameters);
     
         const _ = new ApiRequest(
             Self._LIST_PATH,
