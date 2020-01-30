@@ -36,8 +36,13 @@ class PlayerPoints {
     get offset() { return this._offset; }
     get sequence() { return this._sequence; }
     get requestingAgentId() { return this._requestingAgentId; }
-    get queryTime() { return this._queryTime; }
+    get queryTime() { return this._formatQueryTime(); }
     get queryCount() { return this._queryCount; }
+
+    _formatQueryTime() {
+        const time = this._queryTime / 1000;
+        return time;
+    }
 
     static decode(data) {  // -> PlayerPoints
         return new PlayerPoints(
