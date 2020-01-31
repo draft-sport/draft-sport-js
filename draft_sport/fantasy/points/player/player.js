@@ -30,6 +30,8 @@ class PlayerPoints {
 
     }
 
+    get publicId() { return this._player.publicId; }
+
     get profile() { return this._player; }
     get points() { return this._points; }
     get limit() { return this._limit; }
