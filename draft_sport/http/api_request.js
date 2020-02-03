@@ -21,6 +21,8 @@ class ApiRequest {
         session=null, // Optional Session to override global API key/session id
     ) {
 
+        if (!path) { throw Error('Cannot make request to falsy path'); }
+
         const Self = ApiRequest;
 
         this._complete = false;
