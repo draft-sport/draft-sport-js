@@ -25,4 +25,14 @@ class Season {
         '2020'
     )}
 
+    static withId(seasonId) {
+        if (seasonId == '2020') {
+            return Season.SUPER_RUGBY_2020;
+        }
+        if (seasonId == '2019') {
+            return Season.SUPER_RUGBY_2019
+        }
+        throw Error('Unknown Season');
+    }
+
 }
