@@ -52,9 +52,6 @@ class Session {
             'secret': secret
         }
 
-        console.log('session creation');
-        console.log(payload);
-
         const _ = new ApiRequest(
             Self._PATH,
             'POST',

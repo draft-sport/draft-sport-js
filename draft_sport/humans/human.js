@@ -33,9 +33,6 @@ class Human {
             'secret': plaintextSecret
         }
 
-        console.log('human creation')
-        console.log(payload)
-
         const _ = new ApiRequest(
             Self._PATH,
             'POST',
