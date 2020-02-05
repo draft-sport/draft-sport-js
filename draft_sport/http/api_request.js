@@ -31,8 +31,8 @@ class ApiRequest {
         this._callback = callback;
 
         const request = new XMLHttpRequest();
-        //if (GLOBAL_DEBUG_FLAG === true) { request.withCredentials = true; }
-        request.withCredentials = false;
+        if (GLOBAL_DEBUG_FLAG === true) { request.withCredentials = true; }
+
         this._request = request;
         const self = this;
         request.onreadystatechange = this._parseResponse.bind(self, request)
