@@ -70,6 +70,8 @@ class PlayerPoints {
         offset = 0,  // Integer
         orderBy = PlayerPoints.DEFAULT_ORDER_BY,  // OrderBy
         order = Order.DESCENDING,  // Order,
+        teamName = null,  // Optional[String]
+        positionName = null,  // Optional[String],
         nameFragment = null,  // Optional[String]
         session = null  // Optional[Session]
     ) {
@@ -85,7 +87,15 @@ class PlayerPoints {
         ]
 
         if (nameFragment != null) {
-            rawParameters.push(new UrlParameter('fragment', nameFragment));
+            rawParameters.push(new UrlParameter('name', nameFragment));
+        }
+
+        if (teamName != null && teamName != 'null') {
+            rawParameters.push(new UrlParameter('team', teamName));
+        }
+
+        if (positionName != null && positionName != 'null') {
+            rawParameters.push(new UrlParameter('position', positionName));
         }
 
         const parameters = new UrlParameters(rawParameters);
