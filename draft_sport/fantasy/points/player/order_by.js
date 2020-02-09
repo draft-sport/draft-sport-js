@@ -18,12 +18,16 @@ class PlayerOrderBy {
     static get POINTS_LAST_ROUND() {
         return new PlayerOrderBy('points_last_round');
     }
+    static get POINTS_PER_MINUTE_PLAYED() {
+        return new PlayerOrderBy('points_per_minute_played');
+    }
 
     static get _enumerations() { return [
         PlayerOrderBy.PLAYER_NAME,
         PlayerOrderBy.AVERAGE_POINTS,
         PlayerOrderBy.POINTS_LAST_ROUND,
-        PlayerOrderBy.TOTAL_POINTS
+        PlayerOrderBy.TOTAL_POINTS,
+        PlayerOrderBy.POINTS_PER_MINUTE_PLAYED
     ]}
 
     static withKey(
