@@ -3,6 +3,9 @@
 
 class Order {
 
+    static get ASCENDING_KEY() { return 'ascending'; }
+    static get DESCENDING_KEY() { return 'descending'; }
+
     constructor(key) {
         this._key = key;
         return;
