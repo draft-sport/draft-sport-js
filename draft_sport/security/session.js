@@ -29,6 +29,29 @@ class Session {
     get agentId() { return this._agentId; }
     get created() { return this._created; }
 
+    delete(
+        callback  // Function(Error?, Session?)
+    ) {
+
+        const Self = Session;
+        const parameters = new UrlParameters([
+            new UrlParameter('session_id', this._sessionId),
+        ]);
+
+        const _ = new ApiRequest(
+            Self._PATH,
+            'DELETE',
+            parameters,
+            null,
+            (error, data) => {
+                if (error != null) { callback(error, null); return; }
+                try { callback(null, Self.decode(data)); return; }
+                catch (error) { callback(error, null); return; }
+            }
+        );
+
+    }
+
     static decode(data) {
         return new Session(
             data['session_id'],
@@ -42,7 +65,7 @@ class Session {
     static create(
         email,  // String
         secret,  // String
-        callback  // Function(Error?, Session>)
+        callback  // Function(Error?, Session?)
     ) {
         
         const Self = Session;
@@ -65,6 +88,31 @@ class Session {
                 }
                 catch (error) { callback(error, null); }
                 return;
+            }
+        );
+
+        return;
+    }
+
+    static retrieve(
+        sessionId,  // String
+        callback  // Function(Error? , Session?)
+    ) {
+
+        const Self = Session;
+        const parameters = new UrlParameters([
+            new UrlParameter('session_id', sessionId),
+        ]);
+
+        const _ = new ApiRequest(
+            Self._PATH,
+            'GET',
+            parameters,
+            null,
+            (error, data) => {
+                if (error != null) { callback(error, null); return; }
+                try { callback(null, Self.decode(data)); return; }
+                catch (error) { callback(error, null); return; }
             }
         );
 
