@@ -30,17 +30,18 @@ class League {
     get teams() { return this._teams; }
 
     static decode(data) {
-        return new League(
+        const league = new League(
             data['public_id'],
             data['commissioner_id'],
             data['name'],
             data['created'],
             data['teams'].map((t) => { return LeagueTeam.decode(t); })
         );
+        return league;
     }
 
     static decodeMany(data) {
-        return data.map((d) => { League.decode(d); });
+        return data.map((d) => { return League.decode(d); });
     }
 
     static create(
@@ -111,8 +112,10 @@ class League {
             parameters,
             null,
             (error, data) => {
+                console.log('Decoding callback')
+                console.log(Self.decodeMany(data));
                 if (error != null) { callback(error, null); return; }
-                try { callback(null, League.decodeMany(data)); return; }
+                try { callback(null, Self.decodeMany(data)); return; }
                 catch (error) { callback(error, null); return; }
             },
             session
