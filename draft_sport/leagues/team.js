@@ -7,12 +7,14 @@ class LeagueTeam {
         leagueId,  // String
         picks,  // Array<Pick>
         managerId,  // String
-        name  // String
+        managerDisplayName,  // String
+        name  // Optional[String]
     ) {
 
         this._league_id = leagueId;
         this._picks = picks;
         this._managerId = managerId;
+        this._managerDisplayName = managerDisplayName;
         this._name = name;
 
         return;
@@ -23,6 +25,7 @@ class LeagueTeam {
     get picks() { return this._picks; }
     get managerId() { return this._managerId; }
     get name() { return this._name; }
+    get managerDisplayName() { return this._managerDisplayName; }
 
     static decodeMany(data) {
         return data.map((t) => { return LeagueTeam.decode(t); } );
@@ -33,6 +36,7 @@ class LeagueTeam {
             data['league_id'],
             LeaguePick.decodeMany(data['picks']),
             data['manager_id'],
+            data['manager_display_name'],
             data['name']
         );
     }
