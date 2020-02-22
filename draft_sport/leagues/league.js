@@ -112,8 +112,6 @@ class League {
             parameters,
             null,
             (error, data) => {
-                console.log('Decoding callback')
-                console.log(Self.decodeMany(data));
                 if (error != null) { callback(error, null); return; }
                 try { callback(null, Self.decodeMany(data)); return; }
                 catch (error) { callback(error, null); return; }
