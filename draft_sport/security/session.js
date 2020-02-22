@@ -24,7 +24,7 @@ class Session {
     }
 
     get apiKey() { return this._apiKey; }
-    get sessionId() { return this._sessionKey; }
+    get sessionId() { return this._sessionId; }
     get sessionKey() { return this._sessionKey; }
     get agentId() { return this._agentId; }
     get created() { return this._created; }
@@ -82,12 +82,32 @@ class Session {
             payload,
             (error, data) => {
                 if (error != null) { callback(error, null); return; }
-                try {
-                    const session = Self.decode(data);
-                    callback(null, session);
-                }
-                catch (error) { callback(error, null); }
-                return;
+                try { callback(null, Self.decode(data)); return; }
+                catch (error) { callback(error, null); return; }
+            }
+        );
+
+        return;
+    }
+
+    createFromToken(
+        token,  // String
+        callback  // Function(Error?, Session?)
+    ) {
+
+        const Self = Session;
+
+        const payload = { 'token': token }
+
+        const _ = new ApiRequest(
+            Self._PATH,
+            'POST',
+            null,
+            payload,
+            (error, data) => {
+                if (error != null) { callback(error, null); return; }
+                try { callback(null, Self.decode(data)); return; }
+                catch (error) { callback(error, null); return; }
             }
         );
 

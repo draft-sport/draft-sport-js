@@ -100,12 +100,12 @@ class ApiRequest {
     get responseCode() { return this._responseCode }
 
     _choose_api_key(global, override) {
-        if (override) { return override.api_key; }
+        if (override) { return override.apiKey; }
         return global;
     }
 
     _choose_session_id(global, override) {
-        if (override) { return override.session_id; }
+        if (override) { return override.sessionId; }
         return global;
     }
 
