@@ -90,7 +90,7 @@ class Session {
         return;
     }
 
-    createFromToken(
+    static createFromToken(
         token,  // String
         callback  // Function(Error?, Session?)
     ) {
