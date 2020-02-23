@@ -35,6 +35,7 @@ class ApiRequest {
 
         this._request = request;
         const self = this;
+
         request.onreadystatechange = this._parseResponse.bind(self, request)
         let url = null;
 
