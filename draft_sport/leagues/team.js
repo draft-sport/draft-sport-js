@@ -3,6 +3,8 @@
 
 class LeagueTeam {
 
+    static get _PATH() { return '/league/team'; }
+
     constructor(
         leagueId,  // String
         picks,  // Array<Pick>
@@ -39,6 +41,36 @@ class LeagueTeam {
             data['manager_display_name'],
             data['name']
         );
+    }
+
+    static retrieve(
+        leagueId,  // String
+        managerId,  // String
+        callback,  // Function(Error?, Team?)
+        session=null  // Optional[Session]
+    ) {
+
+        const Self = LeagueTeam;
+
+        const parameters = new UrlParameters([
+            new UrlParameter('league', leagueId),
+            new UrlParameter('manager', managerId),
+        ]);
+
+        const _ = new ApiRequest(
+            Self._PATH,
+            'GET',
+            parameters,
+            null,
+            (error, data) => {
+                if (error) { callback(error, null); return; }
+                try { callback(null, Self.decode(data)); return; }
+                catch (error) { callback(error, null); return; }
+            },
+            session
+        );
+
+        return;
     }
 
 }
