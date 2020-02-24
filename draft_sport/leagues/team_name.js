@@ -18,6 +18,9 @@ class TeamName {
         return;
     }
 
+    get leagueId() { return this._leagueId; }
+    get managerId() { return this._managerId; }
+
     static decode(data) {
         return new TeamName(
             data['name'],
@@ -41,7 +44,7 @@ class TeamName {
             'manager': managerId
         }
 
-        const _ = ApiRequest(
+        const _ = new ApiRequest(
             Self._PATH,
             'POST',
             null,

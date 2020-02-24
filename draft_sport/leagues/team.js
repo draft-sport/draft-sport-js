@@ -10,7 +10,8 @@ class LeagueTeam {
         picks,  // Array<Pick>
         managerId,  // String
         managerDisplayName,  // String
-        name  // Optional[String]
+        name,  // Optional[String]
+        totalPoints  // Integer
     ) {
 
         this._league_id = leagueId;
@@ -18,6 +19,7 @@ class LeagueTeam {
         this._managerId = managerId;
         this._managerDisplayName = managerDisplayName;
         this._name = name;
+        this._totalPoints = totalPoints;
 
         return;
 
@@ -28,6 +30,7 @@ class LeagueTeam {
     get managerId() { return this._managerId; }
     get name() { return this._name; }
     get managerDisplayName() { return this._managerDisplayName; }
+    get totalPoints() { return this._totalPoints; }
 
     static decodeMany(data) {
         return data.map((t) => { return LeagueTeam.decode(t); } );
@@ -39,7 +42,8 @@ class LeagueTeam {
             LeaguePick.decodeMany(data['picks']),
             data['manager_id'],
             data['manager_display_name'],
-            data['name']
+            data['name'],
+            data['total_points']
         );
     }
 
