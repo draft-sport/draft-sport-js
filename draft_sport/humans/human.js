@@ -14,7 +14,7 @@ class Human {
 
     }
 
-    get publicId() { this._publicId; }
+    get publicId() { return this._publicId; }
 
     static decode(data) {
         return new Human(data['public_id']);
