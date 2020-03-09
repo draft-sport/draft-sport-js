@@ -37,7 +37,7 @@ class Subscription {
 
         const Self = Subscription;
 
-        payload = {
+        const payload = {
             'token': token,
             'human': humanId,
             'offer': offerId,
@@ -47,6 +47,7 @@ class Subscription {
 
         const _ = new ApiRequest(
             Self._PATH,
+            'POST',
             null,
             payload,
             (error, data) => {
