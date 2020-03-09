@@ -22,6 +22,9 @@ class ApiRequest {
     ) {
 
         if (!path) { throw Error('Cannot make request to falsy path'); }
+        if (['GET', 'UPDATE', 'DELETE', 'POST'].indexOf(method) < 0) {
+            throw Error('Method appears invalid: ' + method);
+        }
 
         const Self = ApiRequest;
 
