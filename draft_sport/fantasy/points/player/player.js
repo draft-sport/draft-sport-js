@@ -4,7 +4,7 @@
 class PlayerPoints {
 
     static get _LIST_PATH() { return '/fantasy/player/list'; }
-    static get DEFAULT_ORDER_BY() { return PlayerOrderBy.AVERAGE_POINTS; }
+    static get DEFAULT_ORDER_BY() { return PlayerOrderBy.TOTAL_POINTS; }
 
     constructor(
         player,  // Player instance
@@ -42,7 +42,7 @@ class PlayerPoints {
     get queryCount() { return this._queryCount; }
 
     _formatQueryTime() {
-        const time = this._queryTime / 1000;
+        const time = (this._queryTime / 1000000).toFixed(4);
         return time;
     }
 
