@@ -14,7 +14,7 @@ class UnsubscribeRequest {
 
         const payload = { 'email': emailBody }
 
-        const _ = new ApiRequest(
+        ApiRequest.make(
             Self._PATH,
             'POST',
             null,

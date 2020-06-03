@@ -38,7 +38,7 @@ class Session {
             new UrlParameter('session_id', this._sessionId),
         ]);
 
-        const _ = new ApiRequest(
+        ApiRequest.make(
             Self._PATH,
             'DELETE',
             parameters,
@@ -75,7 +75,7 @@ class Session {
             'secret': secret
         }
 
-        const _ = new ApiRequest(
+        ApiRequest.make(
             Self._PATH,
             'POST',
             null,
@@ -84,7 +84,10 @@ class Session {
                 if (error != null) { callback(error, null); return; }
                 try { callback(null, Self.decode(data)); return; }
                 catch (error) { callback(error, null); return; }
-            }
+            },
+            null,
+            null,
+            true
         );
 
         return;
@@ -99,7 +102,7 @@ class Session {
 
         const payload = { 'token': token }
 
-        const _ = new ApiRequest(
+        ApiRequest.make(
             Self._PATH,
             'POST',
             null,
@@ -108,7 +111,10 @@ class Session {
                 if (error != null) { callback(error, null); return; }
                 try { callback(null, Self.decode(data)); return; }
                 catch (error) { callback(error, null); return; }
-            }
+            },
+            null,
+            null,
+            true
         );
 
         return;
@@ -124,7 +130,7 @@ class Session {
             new UrlParameter('session_id', sessionId),
         ]);
 
-        const _ = new ApiRequest(
+        ApiRequest.make(
             Self._PATH,
             'GET',
             parameters,

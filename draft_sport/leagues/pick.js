@@ -42,7 +42,7 @@ class LeaguePick {
             'player': playerId
         }
 
-        const _ = new ApiRequest(
+        ApiRequest.make(
             Self._PATH,
             'POST',
             null,
@@ -74,7 +74,7 @@ class LeaguePick {
             'player': playerId
         }
 
-        const _ = new ApiRequest(
+        ApiRequest.make(
             Self._PATH,
             'DELETE',
             null,

@@ -100,7 +100,7 @@ class PlayerPoints {
 
         const parameters = new UrlParameters(rawParameters);
     
-        const _ = new ApiRequest(
+        ApiRequest.make(
             Self._LIST_PATH,
             'GET',
             parameters,

@@ -48,7 +48,7 @@ class Subscriber {
             'newsletter_id': newsletter.publicId
         }
 
-        const _ = new ApiRequest(
+        ApiRequest.make(
             Self._PATH,
             'POST',
             null,

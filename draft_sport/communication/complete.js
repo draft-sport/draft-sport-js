@@ -31,7 +31,7 @@ class ChallengeCompletion {
         const Self = ChallengeCompletion;
         const payload = { 'code': challengeCode }
 
-        const _ = new ApiRequest(
+        ApiRequest.make(
             Self._PATH,
             'POST',
             null,

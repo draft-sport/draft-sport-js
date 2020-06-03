@@ -59,7 +59,7 @@ class League {
             'season': season.name
         }
 
-        const _ = new ApiRequest(
+        ApiRequest.make(
             Self._PATH,
             'POST',
             null,
@@ -106,7 +106,7 @@ class League {
 
         const parameters = new UrlParameters(rawParameters);
 
-        const _ = new ApiRequest(
+        ApiRequest.make(
             Self._LIST_PATH,
             'GET',
             parameters,
@@ -135,7 +135,7 @@ class League {
             new UrlParameter('league_id', publicId),
         ];
 
-        const _ = new ApiRequest(
+        ApiRequest.make(
             Self._PATH,
             'GET',
             new UrlParameters(rawParameters),

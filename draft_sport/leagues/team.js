@@ -61,7 +61,7 @@ class LeagueTeam {
             new UrlParameter('manager', managerId),
         ]);
 
-        const _ = new ApiRequest(
+        ApiRequest.make(
             Self._PATH,
             'GET',
             parameters,

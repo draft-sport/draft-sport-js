@@ -45,7 +45,7 @@ class Subscription {
             'development_contribution': contribution
         }
 
-        const _ = new ApiRequest(
+        ApiRequest.make(
             Self._PATH,
             'POST',
             null,

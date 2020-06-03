@@ -27,7 +27,7 @@ class Composition {
 
         const Self = Composition;
 
-        const _ = new ApiRequest(
+        ApiRequest.make(
             Self._PATH,
             'GET',
             null,

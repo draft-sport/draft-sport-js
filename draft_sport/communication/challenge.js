@@ -33,7 +33,7 @@ class Challenge {
         const Self = Challenge;
         const payload = { 'method': methodId };
 
-        const _ = new ApiRequest(
+        ApiRequest.make(
             Self._PATH,
             'POST',
             null,

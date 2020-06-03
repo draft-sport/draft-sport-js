@@ -32,7 +32,7 @@ class ManagerInvitation {
             'season': '2020' // MVP hardcode
         }
 
-        const _ = new ApiRequest(
+        ApiRequest.make(
             Self._PATH,
             'POST',
             null,
@@ -60,7 +60,7 @@ class ManagerInvitation {
             new UrlParameter('token', token)
         ])
 
-        const _ = new ApiRequest(
+        ApiRequest.make(
             Self._PATH,
             'GET',
             parameters,
