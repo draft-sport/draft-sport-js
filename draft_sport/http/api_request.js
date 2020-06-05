@@ -30,7 +30,7 @@ class ApiRequest {
         }
 
         const request = new XMLHttpRequest();
-        //if (GLOBAL_DEBUG_FLAG === true) { request.withCredentials = true; }
+        if (GLOBAL_DEBUG_FLAG === true) { request.withCredentials = true; }
 
         request.onreadystatechange = () => {
             Self._parseResponse(request, callback);
@@ -54,11 +54,9 @@ class ApiRequest {
         }
         
         if (data) {
-            console.log('SEND DATA');
             request.setRequestHeader('content-type', Self._JSON_HEADER);
             request.send(JSON.stringify(data));
         } else {
-            console.log('DO NOT SEND DATA');
             request.send();
         }
 
@@ -83,12 +81,7 @@ class ApiRequest {
             let result = null;
             try {
                 const rawText = request.responseText;
-                /* Convert 64-bit integers to strings because FU JavaScript */
-                const quotedBody = rawText.replace(
-                    _AR_QUOTE_EXPRESSION,
-                    '\"$&\"'
-                );
-                result = JSON.parse(quotedBody);
+                result = JSON.parse(rawText);
             } catch(error) {
                 const decodeError = new ApiResponseDecodingError(
                     request.responseText,
