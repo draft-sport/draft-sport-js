@@ -95,7 +95,7 @@ class LeaguePick {
         return new LeaguePick(
             data['created'],
             data['manager_id'],
-            PlayerPoints.decode(data['player']),
+            ScoreCard.decode(data['player']),
             data['league_id']
         );
     }

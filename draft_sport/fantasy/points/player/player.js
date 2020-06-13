@@ -1,7 +1,7 @@
 /* Draft Sport JS - Fantasy Player Class */
 
 
-class PlayerPoints {
+class ScoreCard {
 
     static get _LIST_PATH() { return '/fantasy/player/list'; }
     static get DEFAULT_ORDER_BY() { return PlayerOrderBy.TOTAL_POINTS; }
@@ -46,8 +46,8 @@ class PlayerPoints {
         return time;
     }
 
-    static decode(data) {  // -> PlayerPoints
-        return new PlayerPoints(
+    static decode(data) {  // -> ScoreCard
+        return new ScoreCard(
             Player.decode(data['player']),
             data['limit'],
             data['offset'],
@@ -59,16 +59,16 @@ class PlayerPoints {
         );
     }
 
-    static decodeMany(data) {  // -> Array<PlayerPoints>
-        return data.map((p) => { return PlayerPoints.decode(p); });
+    static decodeMany(data) {  // -> Array<ScoreCard>
+        return data.map((p) => { return ScoreCard.decode(p); });
     }
 
     static retrieveMany(
         season,  // Season
-        callback,  // Function(Error?, Array<PlayerPoints>?)
+        callback,  // Function(Error?, Array<ScoreCard>?)
         limit = 20,  // Integer, Max 20
         offset = 0,  // Integer
-        orderBy = PlayerPoints.DEFAULT_ORDER_BY,  // OrderBy
+        orderBy = ScoreCard.DEFAULT_ORDER_BY,  // OrderBy
         order = Order.DESCENDING,  // Order,
         teamName = null,  // Optional[String]
         positionName = null,  // Optional[String],
@@ -76,7 +76,7 @@ class PlayerPoints {
         session = null  // Optional[Session]
     ) {
 
-        const Self = PlayerPoints;
+        const Self = ScoreCard;
 
         const rawParameters = [
             new UrlParameter('offset', offset),
