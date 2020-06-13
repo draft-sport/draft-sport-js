@@ -3,7 +3,7 @@
 
 class ScoreCard {
 
-    static get _LIST_PATH() { return '/fantasy/player/list'; }
+    static get _LIST_PATH() { return '/fantasy/score-card/list'; }
     static get DEFAULT_ORDER_BY() { return PlayerOrderBy.TOTAL_POINTS; }
 
     constructor(
