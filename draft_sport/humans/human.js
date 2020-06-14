@@ -43,7 +43,11 @@ class Human {
                 const human = Self.decode(data);
                 callback(null, human);
                 return;
-            }
+            },
+            null,
+            null,
+            false,
+            true
         );
 
         return;
