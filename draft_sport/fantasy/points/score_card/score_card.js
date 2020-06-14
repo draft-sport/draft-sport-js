@@ -48,7 +48,7 @@ class ScoreCard {
 
     static decode(data) {  // -> ScoreCard
         return new ScoreCard(
-            Player.decode(data['player']),
+            FantasyPlayer.decode(data['player']),
             data['limit'],
             data['offset'],
             data['sequence'],
@@ -114,7 +114,10 @@ class ScoreCard {
                 catch (error) { callback(error, null); return; }
                 return;
             },
-            session
+            session,
+            null,
+            null,
+            true  // Optional Auth
         );
 
         return;
