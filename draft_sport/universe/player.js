@@ -1,9 +1,8 @@
 /* Draft Sport JS - Universe Player Class */
 
 
-class Player {
+class UniversePlayer {
 
-    // Placebo during dev
     constructor(
         firstName,
         lastName,
