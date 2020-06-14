@@ -12,14 +12,15 @@ class ApiRequest {
     static get _JSON_HEADER() { return 'application/json;charset=UTF-8'; }
 
     static make(
-        path,             // String e.g. '/humans'
-        method,           // String e.g. 'GET'
-        parameters=null,  // UrlParameters (optional)
-        data=null,        // Object e.g. {'hello': 'world' } (optional)
-        callback,         // Function(ApiError?, Data?),
-        session=null,     // Optional Session (overrides global constants)
-        apiEndpoint=null, // Optional String (overrides GLOBAL_API_ENDPOINT)
-        withoutAuth=false // Boolean (send request with no authentication)
+        path,              // String e.g. '/humans'
+        method,            // String e.g. 'GET'
+        parameters=null,   // UrlParameters (optional)
+        data=null,         // Object e.g. {'hello': 'world' } (optional)
+        callback,          // Function(ApiError?, Data?),
+        session=null,      // Optional Session (overrides global constants)
+        apiEndpoint=null,  // Optional String (overrides GLOBAL_API_ENDPOINT)
+        withoutAuth=false, // Boolean (send request with no authentication)
+        optionalAuth=false // Boolean (send with or without auth)
     ) {
 
         const Self = ApiRequest;
@@ -46,13 +47,18 @@ class ApiRequest {
 
         request.open(method, url, true);
 
-        if (!withoutAuth) {
-            const apiKey = Self._chooseApiKey(session);
-            const sessionId = Self._chooseSessionId(session);
+        function applyAuth() {
+            if (withoutAuth) { return; }
+            const apiKey = Self._chooseApiKey(session, optionalAuth);
+            const sessionId = Self._chooseSessionId(session, optionalAuth);
+            if ((!apiKey || !sessionId) && optionalAuth) { return }
             request.setRequestHeader(Self._SESSION_ID_HEADER, sessionId);
-            request.setRequestHeader(Self._KEY_HEADER, apiKey); 
+            request.setRequestHeader(Self._KEY_HEADER, apiKey);
+            return; 
         }
-        
+
+        applyAuth();
+
         if (data) {
             request.setRequestHeader('content-type', Self._JSON_HEADER);
             request.send(JSON.stringify(data));
@@ -119,15 +125,17 @@ class ApiRequest {
 
     }
 
-    static _chooseApiKey(override) {
+    static _chooseApiKey(override, optionalAuth=false) {
         if (override) { return override.apiKey; }
         if (typeof(GLOBAL_API_KEY) !== 'undefined') { return GLOBAL_API_KEY; }
+        if (optionalAuth) { return null; }
         throw Error('No API Key available. Define `GLOBAL_API_KEY` in global sc\
 ope or supply Session instance to ApiRequest.make()');
     }
 
-    static _chooseSessionId(override) {
+    static _chooseSessionId(override, optionalAuth=false) {
         if (override) { return override.sessionId; }
+        if (optionalAuth) { return null; }
         if (typeof(GLOBAL_SESSION_ID) !== 'undefined') { 
             return GLOBAL_SESSION_ID;
         }
