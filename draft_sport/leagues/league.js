@@ -46,17 +46,17 @@ class League {
 
     static create(
         commissionerId,  // String
-        name,  // String
-        season,  // Season
-        callback,  // Function(Error? League?)
-        session = null  // Optional[Session]
+        name,            // String
+        season,          // FantasySeason
+        callback,        // Function(Error? League?)
+        session = null   // Optional[Session]
     ) {
 
         const Self = League;
         const payload = {
             'name': name,
             'commissioner_id': commissionerId,
-            'season': season.name
+            'season': season.publicId
         }
 
         ApiRequest.make(
@@ -76,10 +76,10 @@ class League {
     }
 
     static retrieveMany(
-        managerId,  // Optional[String]
+        managerId,       // Optional[String]
         commissionerId,  // Optional[String]
-        season,  // Season
-        callback,  // Function(Error?, Array<League>?)
+        season,          // FantasySeason
+        callback,        // Function(Error?, Array<League>?)
         limit = 10,
         offset = 0,
         session = null
@@ -101,7 +101,7 @@ class League {
         ); }
 
         if (season != null) { rawParameters.push(
-            new UrlParameter('season', season.name)
+            new UrlParameter('season', season.publicId)
         ); }
 
         const parameters = new UrlParameters(rawParameters);

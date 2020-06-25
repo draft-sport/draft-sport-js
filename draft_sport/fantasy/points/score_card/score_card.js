@@ -64,16 +64,16 @@ class ScoreCard {
     }
 
     static retrieveMany(
-        season,  // Season
-        callback,  // Function(Error?, Array<ScoreCard>?)
-        limit = 20,  // Integer, Max 20
-        offset = 0,  // Integer
+        season,                     // FantasySeason
+        callback,                   // Function(Error?, Array<ScoreCard>?)
+        limit = 20,                 // Integer, Max 20
+        offset = 0,                 // Integer
         orderBy = ScoreCard.DEFAULT_ORDER_BY,  // OrderBy
-        order = Order.DESCENDING,  // Order,
-        teamName = null,  // Optional[String]
-        positionName = null,  // Optional[String],
-        nameFragment = null,  // Optional[String]
-        session = null  // Optional[Session]
+        order = Order.DESCENDING,   // Order,
+        teamName = null,            // Optional[String]
+        positionName = null,        // Optional[String],
+        nameFragment = null,        // Optional[String]
+        session = null              // Optional[Session]
     ) {
 
         const Self = ScoreCard;
@@ -83,7 +83,7 @@ class ScoreCard {
             new UrlParameter('limit', limit),
             new UrlParameter('order_by', orderBy.key),
             new UrlParameter('order', order.key),
-            new UrlParameter('season', season.name)
+            new UrlParameter('season', season.publicId)
         ]
 
         if (nameFragment != null) {
