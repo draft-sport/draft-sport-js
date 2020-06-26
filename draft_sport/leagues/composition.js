@@ -6,22 +6,27 @@ class Composition {
     static get _PATH() { return '/leagues/team/composition' }
 
     constructor(
-        requirements
+        positionRequirements,   // Array<PositionRequirement>
+        categoryRequirements    // Array<CategoryRequirement>
     ) {
-        this._requirements = requirements;
+        this._positionRequirements = positionRequirements;
+        this._categoryRequirements = categoryRequirements;
+
         return;
     }
 
-    get requirements() { return this._requirements; }
+    get positionRequirements() { return this._positionRequirements; }
+    get categoryRequirements() { return this._categoryRequirements; }
 
     static decode(data) {
         return new Composition(
-            Requirement.decodeMany(data['requirements'])
+            PositionRequirement.decodeMany(data['position_requirements']),
+            CategoryRequirement.decodeMany(data['category_requirements'])
         );
     }
 
     static retrieve(
-        callback,  // Function(Error?, Composition?)
+        callback,     // Function(Error?, Composition?)
         session=null  // Optional[Session]
     ) {
 
@@ -36,7 +41,11 @@ class Composition {
                 if (error) { callback(error, null); return; }
                 try { callback(null, Self.decode(data)); return; }
                 catch (error) { callback(error, null); return; }
-            }
+            },
+            session,
+            null,
+            false,
+            true
         );
 
         return;
