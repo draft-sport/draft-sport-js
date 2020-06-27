@@ -8,8 +8,10 @@ class CategoryRequirement extends CompositionRequirement {
         category      // PositionCategory
     ) {
 
+        super();
+
         this._count = count;
-        this._category = categoryName;
+        this._category = category;
 
         return;
 

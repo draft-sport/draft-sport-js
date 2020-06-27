@@ -32,6 +32,7 @@ class FilledRequirement {
     get isPlural()  { return this._requirement.count > 1; }
     get numberFilled() { return this._picks.length; }
     get isEmpty() { return this._picks.length < 1; }
+    get isNotEmpty() { return !this.isEmpty; }
     get isSatisfied() { return this._picks.length == this._requirement.count; }
     get isNotSatisfied() { return !this.isSatisfied; }
 

@@ -6,12 +6,13 @@ class LeagueTeam {
     static get _PATH() { return '/league/team'; }
 
     constructor(
-        leagueId,  // String
-        picks,  // Array<Pick>
-        managerId,  // String
-        managerDisplayName,  // String
-        name,  // Optional[String]
-        totalPoints  // Integer
+        leagueId,             // String
+        picks,                // Array<Pick>
+        managerId,            // String
+        managerDisplayName,   // String
+        name,                 // Optional[String]
+        totalPoints,          // Integer
+        composition           // Composition
     ) {
 
         this._league_id = leagueId;
@@ -20,6 +21,7 @@ class LeagueTeam {
         this._managerDisplayName = managerDisplayName;
         this._name = name;
         this._totalPoints = totalPoints;
+        this._composition = composition;
 
         return;
 
@@ -32,6 +34,80 @@ class LeagueTeam {
     get managerDisplayName() { return this._managerDisplayName; }
     get totalPoints() { return this._totalPoints; }
 
+    get filledComposition() {
+
+        const filledRequirements = new Array(); // Array<FilledRequirement>
+
+        const remainingPicks = Array.from(this._picks);
+
+        for (
+            let i = 0;
+            i < this._composition.positionRequirements.length;
+            i++
+        ) {
+
+            const requirement = this._composition.positionRequirements[i];
+            const picksSatisfyingRequirement = new Array();
+            const potentialPicks = Array.from(remainingPicks);
+            
+            for (let k = 0; k < potentialPicks.length; k++) {
+
+                const pick = potentialPicks[k];
+                if (pick.scoreCard.hasPositionWithName(requirement.positionName)) {
+                    picksSatisfyingRequirement.push(pick);
+                    remainingPicks.pop(pick);
+                }
+
+                continue;
+
+            }
+
+            filledRequirements.push(new FilledRequirement(
+                requirement,
+                picksSatisfyingRequirement
+            ));
+
+            continue;
+
+        }
+
+        for (
+            let j = 0;
+            j < this._composition.categoryRequirements.length;
+            j++
+        ) {
+
+            const requirement = this._composition.categoryRequirements[j];
+            const picksSatisfyingRequirement = new Array();
+
+            const potentialPicks = Array.from(remainingPicks);
+
+            for (let m = 0; m < potentialPicks.length; m++) {
+
+                const pick = potentialPicks[m];
+                if (pick.scoreCard.hasPositionInCategory(
+                    requirement.category
+                )) {
+                    picksSatisfyingRequirement.push(pick);
+                    remainingPicks.pop(pick);
+                }
+
+                continue;
+            }
+
+            filledRequirements.push(new FilledRequirement(
+                requirement,
+                picksSatisfyingRequirement
+            ));
+
+            continue;
+            
+        }
+
+        return new FilledComposition(filledRequirements);
+
+    }
+
     static decodeMany(data) {
         return data.map((t) => { return LeagueTeam.decode(t); } );
     }
@@ -43,7 +119,8 @@ class LeagueTeam {
             data['manager_id'],
             data['manager_display_name'],
             data['name'],
-            data['total_points']
+            data['total_points'],
+            Composition.decode(data['composition'])
         );
     }
 

@@ -37,7 +37,7 @@ class FantasyPlayer {
             data['first_name'],
             data['last_name'],
             data['team_name'],
-            FantasyPosition.optionallyDecode(data['position_name']),
+            FantasyPosition.optionallyDecode(data['position']),
             data['public_id']
         );
     }

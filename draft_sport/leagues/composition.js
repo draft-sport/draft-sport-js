@@ -18,6 +18,10 @@ class Composition {
     get positionRequirements() { return this._positionRequirements; }
     get categoryRequirements() { return this._categoryRequirements; }
 
+    get requirements() {
+        return this.positionRequirements.concat(this.categoryRequirements);
+    }
+
     static decode(data) {
         return new Composition(
             PositionRequirement.decodeMany(data['position_requirements']),

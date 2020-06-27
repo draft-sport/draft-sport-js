@@ -6,26 +6,27 @@ class LeaguePick {
     static get _PATH() { return '/league/pick'; }
 
     constructor(
-        created,  // String
+        created,    // String
         managerId,  // String
-        player,  // Player
-        leagueId  // String
+        scoreCard,  // ScoreCard
+        leagueId    // String
     ) {
 
         this._created = created;
         this._managerId = managerId;
-        this._player = player;
+        this._scoreCard = scoreCard;
         this._leagueId = leagueId;
 
         return;
 
     }
 
-    get player() { return this._player; }
-    get fullName() { return this._player.profile.fullName; }
-    get positionName() { return this._player.profile.positionName; }
-    get teamName() { return this._player.profile.teamName; }
-    get totalPoints() { return this._player.points.totalPoints; }
+    get player() { return this._scoreCard; }  // Deprecated
+    get scoreCard() { return this._scoreCard; }
+    get fullName() { return this._scoreCard.profile.fullName; }
+    get positionName() { return this._scoreCard.profile.positionName; }
+    get teamName() { return this._scoreCard.profile.teamName; }
+    get totalPoints() { return this._scoreCard.points.totalPoints; }
 
     static create(
         leagueId,  // String

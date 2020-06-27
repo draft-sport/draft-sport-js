@@ -8,6 +8,8 @@ class PositionRequirement extends CompositionRequirement {
         positionName  // String
     ) {
 
+        super();
+
         this._count = count;
         this._positionName = positionName;
 
