@@ -7,14 +7,14 @@ class ScoreCard {
     static get DEFAULT_ORDER_BY() { return PlayerOrderBy.TOTAL_POINTS; }
 
     constructor(
-        player,  // Player instance
-        limit,  // Integer
-        offset,  // Integer
-        sequence,  // Integer
+        player,             // FantasyPlayer
+        limit,              // Integer
+        offset,             // Integer
+        sequence,           // Integer
         requestingAgentId,  // String
-        points,  // Points,
-        queryTime, // String encoded time interval
-        queryCount  // Integer
+        points,             // Points,
+        queryTime,          // String encoded time interval
+        queryCount          // Integer
     ) {
 
         this._player = player;
@@ -46,6 +46,14 @@ class ScoreCard {
         return time;
     }
 
+    hasPositionWithName(name) {
+        return this._player.positionName == name;
+    }
+
+    hasPositionInCategory(category) {
+        return this._player.position.isInCategory(category);
+    }
+
     static decode(data) {  // -> ScoreCard
         return new ScoreCard(
             FantasyPlayer.decode(data['player']),
@@ -71,8 +79,9 @@ class ScoreCard {
         orderBy = ScoreCard.DEFAULT_ORDER_BY,  // OrderBy
         order = Order.DESCENDING,   // Order,
         teamName = null,            // Optional[String]
-        positionName = null,        // Optional[String],
+        positionName = null,        // Optional[String]
         nameFragment = null,        // Optional[String]
+        categoryName = null,        // Optional[String]
         session = null              // Optional[Session]
     ) {
 
@@ -96,6 +105,10 @@ class ScoreCard {
 
         if (positionName != null && positionName != 'null') {
             rawParameters.push(new UrlParameter('position', positionName));
+        }
+
+        if (categoryName != null && categoryName != 'null') {
+            rawParameters.push(new UrlParameter('category', categoryName));
         }
 
         const parameters = new UrlParameters(rawParameters);
