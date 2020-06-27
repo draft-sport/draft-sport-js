@@ -1,14 +1,14 @@
-/* Draft Sport JS - Team Name Class */
+/* Draft Sport JS - League Team Name Class */
 
 
-class TeamName {
+class LeagueTeamName {
 
     static get _PATH() { return '/league/team/name'; }
 
     constructor(
-        name,  // String
+        name,       // String
         managerId,  // String
-        leagueId  // String
+        leagueId     // String
     ) {
 
         this._name = name;
@@ -20,9 +20,10 @@ class TeamName {
 
     get leagueId() { return this._leagueId; }
     get managerId() { return this._managerId; }
+    get name() { return this._name; }
 
     static decode(data) {
-        return new TeamName(
+        return new LeagueTeamName(
             data['name'],
             data['manager_id'],
             data['league_id']
@@ -30,14 +31,14 @@ class TeamName {
     }
 
     static create(
-        name,  // String
-        leagueId,  // String
-        managerId,  // String
-        callback,  // Function(Error? TeamName?)
-        session=null  // Optional[Session]
+        name,         // String
+        leagueId,     // String
+        managerId,    // String
+        callback,     // Function<Error?, LeagueTeamName?>
+        session=null  // Optional<Session>
     ) {
 
-        const Self = TeamName;
+        const Self = LeagueTeamName;
         const payload = {
             'name': name,
             'league': leagueId,
@@ -49,11 +50,7 @@ class TeamName {
             'POST',
             null,
             payload,
-            (error, data) => {
-                if (error != null) { callback(error, null); return; }
-                try { callback(null, Self.decode(data)); return;} 
-                catch (error) { callback(error, null); return; }
-            },
+            (e, d) => { ApiRequest.decodeResponse(e, d, callback, Self); },
             session
         );
 
