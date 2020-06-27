@@ -22,6 +22,16 @@ class FantasyPosition {
     get indexid() { return this._indexid; }
     get categories() { return this._categories; }
 
+    isInCategory(category) {
+
+        const indices = this._categories.map((c) => { return c.indexid; })
+        if (indices.indexOf(category.indexid) < 0) {
+            return false;
+        }
+        return true;
+
+    }
+
     static optionallyDecode(data) {
         if (!data) { return null; }
         return FantasyPosition.decode(data);
