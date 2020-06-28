@@ -57,7 +57,11 @@ class Subscriber {
                 if (error != null) { callback(error, null); return; }
                 try { callback(null, Self.decode(data)); return; }
                 catch (error) { callback(error, null); return; }
-            }
+            },
+            null,
+            null,
+            false,
+            true
         );
 
         return;
