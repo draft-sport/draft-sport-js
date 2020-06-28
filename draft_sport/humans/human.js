@@ -6,18 +6,24 @@ class Human {
     static get _PATH() { return '/human'; }
 
     constructor(
-        publicId  // String
+        publicId,  // String
+        handle     // Optional<String>
     ) {
 
         this._publicId = publicId;
+        this._handle = handle;
         return;
 
     }
 
     get publicId() { return this._publicId; }
+    get handle() { return this._handle; }
 
     static decode(data) {
-        return new Human(data['public_id']);
+        return new Human(
+            data['public_id'],
+            data['handle']
+        );
     }
 
     static create(
