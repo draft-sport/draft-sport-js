@@ -17,6 +17,17 @@ class RoundDraw {
 
     get sequenceNumber() { return this._sequenceNumber; }
     get fixtures() { return this._fixtures; }
+    get uniqueParties() {
+        const self = this;
+        const parties = Array();
+        for(let i = 0; i < self._fixtures.length; i++) {
+            const fixture = self._fixtures[i];
+            parties.push(fixture.firstParty);
+            if (fixture.secondParty) { parties.push(fixture.secondParty); }
+            continue;
+        }
+        return parties;
+    }
 
     static retrieveAllInLeague(
         leagueId,     // String

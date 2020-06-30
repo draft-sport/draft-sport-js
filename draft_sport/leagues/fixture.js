@@ -5,7 +5,7 @@ class Fixture {
 
     constructor(
         firstParty,   // FixtureParty
-        secondParty,  // FixtureParty
+        secondParty,  // Optional<FixtureParty>    null implies a "bye"
         played        // Boolean
     ) {
 
