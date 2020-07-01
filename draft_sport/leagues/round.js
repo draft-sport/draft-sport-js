@@ -38,7 +38,6 @@ class RoundDraw {
         );
     }
 
-    stati
     static retrieveAllInLeague(
         leagueId,     // String
         callback,     // Function(Error?, Array<RoundDraw>?)
