@@ -6,11 +6,11 @@ class League {
     static get _LIST_PATH() { return '/league/list' }
 
     constructor(
-        publicId,
-        commissionerId,
-        name,
-        created,
-        teams
+        publicId,       // String
+        commissionerId, // String
+        name,           // String
+        created,        // String
+        teams           // Array<TeamSummary>
     ) {
 
         this._publicId = publicId;
@@ -35,7 +35,7 @@ class League {
             data['commissioner_id'],
             data['name'],
             data['created'],
-            data['teams'].map((t) => { return LeagueTeam.decode(t); })
+            data['teams'].map((t) => { return TeamSummary.decode(t); })
         );
         return league;
     }
