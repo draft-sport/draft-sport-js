@@ -3,9 +3,11 @@
 
 class RoundDraw {
 
+    static get _LIST_PATH() { return '/league/round/list'; }
+
     constructor(
         sequenceNumber,   // Integer
-        fixtures         // Array<Fixture>
+        fixtures          // Array<Fixture>
     ) {
 
         this._sequenceNumber = sequenceNumber;
@@ -29,39 +31,40 @@ class RoundDraw {
         return parties;
     }
 
+    static decode(data) {
+        return new RoundDraw(
+            data['round_sequence_number'],
+            Fixture.decodeMany(data['fixtures'])
+        );
+    }
+
+    stati
     static retrieveAllInLeague(
         leagueId,     // String
         callback,     // Function(Error?, Array<RoundDraw>?)
         session=null  // Optional<Session>
     ) {
 
-        callback(null, _DEBUG_DRAWS);
+        const Self = RoundDraw;
+        const rawParameters = [new UrlParameter('league', leagueId)]
+
+        const parameters = new UrlParameters(rawParameters);
+        const c = callback;
+
+        ApiRequest.make(
+            Self._LIST_PATH,
+            'GET',
+            parameters,
+            null,
+            (e, d) => { ApiRequest.decodeManyInResponse(e, d, c, Self); },
+            session,
+            null,
+            false,
+            false
+        );
 
         return;
 
     }
 
 }
-
-const _DEBUG_DRAWS = [
-    new RoundDraw(1, [
-        new Fixture(
-            new FixtureParty('Cargie\'s Team', 'Cargie', 1, 20),
-            new FixtureParty('Nabung\'s Team', 'Nabung', 2, 12)
-        ),
-        new Fixture(
-            new FixtureParty('Nelson\'s Team', 'Nelson', 1, 20),
-            new FixtureParty('Harry\'s Team', 'Harry', 2, 12)
-        )
-    ]),
-    new RoundDraw(2, [
-        new Fixture(
-            new FixtureParty('Cargie\'s Team', 'Cargie', 1, 20),
-            new FixtureParty('Harry\'s Team', 'Harry', 2, 12)
-        ),
-        new Fixture(
-            new FixtureParty('Nelson\'s Team', 'Nelson', 1, 20),
-            new FixtureParty('Nabung\'s Team', 'Nabung', 2, 12)
-        )
-    ])
-];

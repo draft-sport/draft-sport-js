@@ -5,13 +5,11 @@ class Fixture {
 
     constructor(
         firstParty,   // FixtureParty
-        secondParty,  // Optional<FixtureParty>    null implies a "bye"
-        played        // Boolean
+        secondParty  // Optional<FixtureParty>    null implies a "bye"
     ) {
 
         this._firstParty = firstParty;
         this._secondParty = secondParty;
-        this._played = played;
 
         return;
 
@@ -19,6 +17,16 @@ class Fixture {
 
     get firstParty() { return this._firstParty; }
     get secondParty() { return this._secondParty; }
-    get played() { return this._player; }
+
+    static decode(data) {
+        return new Fixture(
+            FixtureParty.decode(data['first_party']),
+            FixtureParty.optionallyDecode(data['second_party'])
+        );
+    }
+
+    static decodeMany(data) {
+        return data.map((d) => { return Fixture.decode(d); });
+    }
 
 }
