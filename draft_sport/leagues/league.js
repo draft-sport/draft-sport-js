@@ -132,7 +132,7 @@ class League {
         const Self = League;
 
         const rawParameters = [
-            new UrlParameter('league_id', publicId),
+            new UrlParameter('league', publicId),
         ];
 
         ApiRequest.make(

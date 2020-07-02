@@ -15,7 +15,7 @@ class LeagueTeam {
         composition           // Composition
     ) {
 
-        this._league_id = leagueId;
+        this._leagueId = leagueId;
         this._picks = picks;
         this._managerId = managerId;
         this._managerDisplayName = managerDisplayName;
@@ -27,7 +27,7 @@ class LeagueTeam {
 
     }
 
-    get leagueId() { return this._league_id; }
+    get leagueId() { return this._leagueId; }
     get picks() { return this._picks; }
     get managerId() { return this._managerId; }
     get name() { return this._name; }
@@ -105,6 +105,31 @@ class LeagueTeam {
         }
 
         return new FilledComposition(filledRequirements);
+
+    }
+
+    delete(
+        callback,     // Function(Error?)
+        session=null  
+    ) {
+
+        const self = this; const Self = LeagueTeam;
+
+        const parameters = new UrlParameters([
+            new UrlParameter('league', self._leagueId),
+            new UrlParameter('manager', self._managerId),
+        ]);
+
+        ApiRequest.make(
+            Self._PATH,
+            'DELETE',
+            parameters,
+            null,
+            (e, _) => { callback(e); return},
+            session
+        );
+
+        return;
 
     }
 

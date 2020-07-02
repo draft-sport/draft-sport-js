@@ -17,6 +17,11 @@ class TeamSummary {
 
     }
 
+    get leagueId() { return this._leagueId; }
+    get teamName() { return this._teamName; }
+    get managerId() { return this._managerId; }
+    get managerName() { return this._managerName; }
+
     static decode(data) {
         return new TeamSummary(
             data['league_public_id'],
