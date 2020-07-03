@@ -39,6 +39,11 @@ class LeagueTeam {
         const filledRequirements = new Array(); // Array<FilledRequirement>
 
         const remainingPicks = Array.from(this._picks);
+        remainingPicks.sort((a, b) => {
+            if (a.created < b.created) { return -1; }
+            if (a.created < b.created) { return 1; }
+            return 0;
+        })
 
         for (
             let i = 0;

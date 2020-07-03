@@ -27,6 +27,7 @@ class LeaguePick {
     get positionName() { return this._scoreCard.profile.positionName; }
     get teamName() { return this._scoreCard.profile.teamName; }
     get totalPoints() { return this._scoreCard.points.totalPoints; }
+    get created() { return this._created; }
 
     static create(
         leagueId,  // String
