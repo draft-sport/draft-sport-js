@@ -49,18 +49,30 @@ class LeagueTeam {
             const requirement = this._composition.positionRequirements[i];
             const picksSatisfyingRequirement = new Array();
             const potentialPicks = Array.from(remainingPicks);
+            const newRemainingPicks = new Array();
             
             for (let k = 0; k < potentialPicks.length; k++) {
 
                 const pick = potentialPicks[k];
-                if (pick.scoreCard.hasPositionWithName(requirement.positionName)) {
-                    picksSatisfyingRequirement.push(pick);
-                    remainingPicks.pop(pick);
+                if (picksSatisfyingRequirement.length < requirement.count) {
+                    if (pick.scoreCard.hasPositionWithName(
+                        requirement.positionName
+                    )) {
+                        picksSatisfyingRequirement.push(pick);
+                        continue;
+                    }
                 }
 
+                newRemainingPicks.push(pick);
                 continue;
 
             }
+
+            remainingPicks.splice(
+                0,
+                remainingPicks.length,
+                ...newRemainingPicks
+            );
 
             filledRequirements.push(new FilledRequirement(
                 requirement,
@@ -81,6 +93,7 @@ class LeagueTeam {
             const picksSatisfyingRequirement = new Array();
 
             const potentialPicks = Array.from(remainingPicks);
+            const newRemainingPicks = new Array();
 
             for (let m = 0; m < potentialPicks.length; m++) {
 
@@ -89,11 +102,18 @@ class LeagueTeam {
                     requirement.category
                 )) {
                     picksSatisfyingRequirement.push(pick);
-                    remainingPicks.pop(pick);
+                    continue;
                 }
 
+                newRemainingPicks.push(pick);
                 continue;
             }
+
+            remainingPicks.splice(
+                0,
+                remainingPicks.length,
+                ...newRemainingPicks
+            );
 
             filledRequirements.push(new FilledRequirement(
                 requirement,
