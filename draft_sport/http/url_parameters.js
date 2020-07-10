@@ -12,6 +12,17 @@ class UrlParameters {
 
     }
 
+    get stringSummary() {
+        if (this._targets.length < 1) { return null; }
+        let summary = '';
+        for (let i = 0; i < this._targets.length; i++) {
+            if (summary != '') { summary += '\n'; }
+            summary += this._targets[i].string;
+            continue;
+        }
+        return summary;
+    }
+
     get query() { 
         let query = '?';
         for (let i = 0; i < this._targets.length; i++) {

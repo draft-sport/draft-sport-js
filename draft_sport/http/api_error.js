@@ -32,20 +32,28 @@ disruption. We will attempt to resolve the problem as quickly as possible";
 class ApiError extends Error {
 
     static get genericDescription() { return ERROR_FALLBACK_INFORMATION; }
+    static get EVENT_KEY() { return 'draftSportApiError'; }
 
-    constructor(code, data=null) {
+    constructor(
+        code,                     // Integer
+        data=null,                // Optional<Object>
+        requestSummary=null       // Optional<Object> (Untyped)
+    ) {
 
         const description = ERROR_CUSTOMER_INFORMATION[code];
         let techInfo = description;
         if (data != null && data != undefined && data[ERROR_INFO_KEY]) {
             techInfo = data[ERROR_INFO_KEY];
         }
-        console.log(data);
         const logMessage = 'API error (' + code + '), ' + techInfo;
         super(logMessage);
-        this._code = code;
-        this._customerDescription = description || ERROR_FALLBACK_INFORMATION;
-        this._technicalDescription = techInfo;
+
+        const self = this;
+
+        self._code = code;
+        self._customerDescription = description || ERROR_FALLBACK_INFORMATION;
+        self._technicalDescription = techInfo;
+        self._requestSummary = requestSummary;
 
         return
 
@@ -54,6 +62,52 @@ class ApiError extends Error {
     get code() { return this._code }
     get customerDescription() { return this._customerDescription }
     get technicalDescription() { return this._technicalDescription }
+
+    dispatchEvent() {
+        
+        const Self = ApiError; const self = this;
+
+        if (!self._requestSummary) {
+
+            window.dispatchEvent(new CustomEvent(
+                Self.EVENT_KEY,
+                {
+                    detail : {
+                        httpErrorCode: self._code,
+                        technicalDescription: self._technicalDescription
+                    }  
+                }
+            ));
+
+            return;
+            
+        }
+
+        const eventDetail = {
+            httpErrorCode: self._code,
+            technicalDescription: (() => {
+                if (!self._technicalDescription) {
+                    return 'None'
+                }
+                return self._technicalDescription
+            })(),
+            requestData: self._requestSummary.requestData,
+            requestParameters: self._requestSummary.requestParameters,
+            requestPath: self._requestSummary.requestPath,
+            requestMethod: self._requestSummary.requestMethod,
+            suppressError: self._requestSummary.suppressError
+        }
+
+        const event = new CustomEvent(
+            Self.EVENT_KEY,
+            { detail: { eventDetail } }
+        );
+
+        window.dispatchEvent(event);
+
+        return;
+
+    }
 
     /* Optionally supply this error instance with an object full of verbose
     error descriptions. Verbose descriptions may be associated with

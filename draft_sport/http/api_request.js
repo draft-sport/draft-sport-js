@@ -12,15 +12,16 @@ class ApiRequest {
     static get _JSON_HEADER() { return 'application/json;charset=UTF-8'; }
 
     static make(
-        path,              // String e.g. '/humans'
-        method,            // String e.g. 'GET'
-        parameters=null,   // UrlParameters (optional)
-        data=null,         // Object e.g. {'hello': 'world' } (optional)
-        callback,          // Function(ApiError?, Data?),
-        session=null,      // Optional Session (overrides global constants)
-        apiEndpoint=null,  // Optional String (overrides GLOBAL_API_ENDPOINT)
-        withoutAuth=false, // Boolean (send request with no authentication)
-        optionalAuth=false // Boolean (send with or without auth)
+        path,               // String e.g. '/humans'
+        method,             // String e.g. 'GET'
+        parameters=null,    // Optional<UrlParameters>
+        data=null,          // Object e.g. {'hello': 'world' } (optional)
+        callback,           // Function(ApiError?, Data?),
+        session=null,       // Optional Session (overrides global constants)
+        apiEndpoint=null,   // Optional String (overrides GLOBAL_API_ENDPOINT)
+        withoutAuth=false,  // Boolean (send request with no authentication)
+        optionalAuth=false, // Boolean (send with or without auth)
+        suppressError=false // Do not send ErrorReport on failure
     ) {
 
         const Self = ApiRequest;
@@ -33,8 +34,16 @@ class ApiRequest {
         const request = new XMLHttpRequest();
         if (GLOBAL_DEBUG_FLAG === true) { request.withCredentials = true; }
 
+        const summary = {
+            requestData: data ? JSON.stringify(data) : null,
+            requestParameters: parameters,
+            requestPath: path,
+            requestMethod: method,
+            suppressError: suppressError
+        }
+
         request.onreadystatechange = () => {
-            Self._parseResponse(request, callback);
+            Self._parseResponse(request, callback, summary);
             return;
         }
 
@@ -78,7 +87,7 @@ class ApiRequest {
 
     }
 
-    static _parseResponse(request, callback) {
+    static _parseResponse(request, callback, summary) {
 
         const state = request.readyState;
         const status = request.status;
@@ -108,15 +117,23 @@ class ApiRequest {
 
             let errorContent = null;
 
+
             try {
                 console.log(request.responseText);
                 errorContent = JSON.parse(request.responseText);
             } catch (error) {
-                callback(new ApiError(status), null);
+                const e = new ApiError(
+                    status,
+                    null,
+                    summary
+                );
+                e.dispatchEvent();
+                callback(e, null);
                 return
             }
 
-            const error = new ApiError(status, errorContent);
+            const error = new ApiError(status, errorContent, summary);
+            error.dispatchEvent();
             callback(error, null);
             return;
         }
