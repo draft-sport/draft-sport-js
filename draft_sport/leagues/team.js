@@ -11,7 +11,8 @@ class LeagueTeam {
         managerId,            // String
         managerDisplayName,   // String
         name,                 // Optional[String]
-        totalPoints,          // Integer
+        asAt,                 // String
+        asAtRound,            // Integer
         composition           // Composition
     ) {
 
@@ -20,7 +21,8 @@ class LeagueTeam {
         this._managerId = managerId;
         this._managerDisplayName = managerDisplayName;
         this._name = name;
-        this._totalPoints = totalPoints;
+        this._asAt = asAt;
+        this._asAtRound = asAtRound;
         this._composition = composition;
 
         return;
@@ -31,8 +33,9 @@ class LeagueTeam {
     get picks() { return this._picks; }
     get managerId() { return this._managerId; }
     get name() { return this._name; }
+    get asAt() { return this._asAt; }
+    get asAtRound() { return this._asAtRound; }
     get managerDisplayName() { return this._managerDisplayName; }
-    get totalPoints() { return this._totalPoints; }
 
     get filledComposition() {
 
@@ -60,9 +63,7 @@ class LeagueTeam {
 
                 const pick = potentialPicks[k];
                 if (picksSatisfyingRequirement.length < requirement.count) {
-                    if (pick.scoreCard.hasPositionWithName(
-                        requirement.positionName
-                    )) {
+                    if (pick.player.positionName == requirement.positionName) {
                         picksSatisfyingRequirement.push(pick);
                         continue;
                     }
@@ -103,9 +104,7 @@ class LeagueTeam {
             for (let m = 0; m < potentialPicks.length; m++) {
 
                 const pick = potentialPicks[m];
-                if (pick.scoreCard.hasPositionInCategory(
-                    requirement.category
-                )) {
+                if (pick.player.position.isInCategory(requirement.category)) {
                     picksSatisfyingRequirement.push(pick);
                     continue;
                 }
@@ -169,29 +168,37 @@ class LeagueTeam {
             data['manager_id'],
             data['manager_display_name'],
             data['name'],
-            data['total_points'],
+            data['as_at'],
+            data['as_at_round_sequence'],
             Composition.decode(data['composition'])
         );
     }
 
     static retrieve(
-        leagueId,  // String
-        managerId,  // String
-        callback,  // Function(Error?, Team?)
+        leagueId,     // String
+        managerId,    // String
+        asAtRound,    // Optional<Integer>
+        callback,     // Function(Error?, Team?)
         session=null  // Optional[Session]
     ) {
 
         const Self = LeagueTeam;
 
-        const parameters = new UrlParameters([
+        if (!callback) { throw Error('Missing callback'); }
+
+        const parameters = [
             new UrlParameter('league', leagueId),
             new UrlParameter('manager', managerId),
-        ]);
+        ];
+
+        if (asAtRound) {
+            parameters.push(new UrlParameter('as_at_round', asAtRound));
+        }
 
         ApiRequest.make(
             Self._PATH,
             'GET',
-            parameters,
+            new UrlParameters(parameters),
             null,
             (error, data) => {
                 if (error) { callback(error, null); return; }
