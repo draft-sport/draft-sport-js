@@ -41,6 +41,7 @@ class LeaguePick {
         managerId,    // String
         playerId,     // String
         asAtRound,    // Integer
+        benched,      // Boolean
         callback,     // Function(Error?, LeaguePick?)
         session=null  // Optional[Session]
     ) {
@@ -53,7 +54,8 @@ class LeaguePick {
             'league': leagueId,
             'manager': managerId,
             'player': playerId,
-            'as_at_round': asAtRound
+            'as_at_round': asAtRound,
+            'benched': benched
         }
 
         ApiRequest.make(
@@ -74,11 +76,12 @@ class LeaguePick {
     }
 
     static delete(
-        leagueId,     // String
-        managerId,    // String
-        playerId,     // String
-        asAtRound,    // Integer
-        callback,     // Function(Error?, LeaguePick?)
+        leagueId,                   // String
+        managerId,                  // String
+        playerId,                   // String
+        asAtRound,                  // Integer
+        callback,                   // Function(Error?, LeaguePick?)
+        deleteAllPreceding=false,   // Boolean
         session=null
     ) {
 
@@ -90,7 +93,8 @@ class LeaguePick {
             'league': leagueId,
             'manager': managerId,
             'player': playerId,
-            'as_at_round': asAtRound
+            'as_at_round': asAtRound,
+            'delete_all_preceding': deleteAllPreceding
         }
 
         ApiRequest.make(
