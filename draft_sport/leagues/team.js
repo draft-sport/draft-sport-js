@@ -62,6 +62,12 @@ class LeagueTeam {
             for (let k = 0; k < potentialPicks.length; k++) {
 
                 const pick = potentialPicks[k];
+
+                /* For MVP expediency purposes, we assume that benched
+                   Picks are only category picks. The assumption is
+                   enforced below. */
+                if (pick.benched) { newRemainingPicks.push(pick); continue; }
+
                 if (picksSatisfyingRequirement.length < requirement.count) {
                     if (pick.player.positionName == requirement.positionName) {
                         picksSatisfyingRequirement.push(pick);
@@ -104,6 +110,12 @@ class LeagueTeam {
             for (let m = 0; m < potentialPicks.length; m++) {
 
                 const pick = potentialPicks[m];
+
+                /* For MVP expediency, we assume that benched picks are
+                   category picks. If we have a category pick that is not
+                   benched, we exclude it with the following line. */
+                if (!pick.benched) { newRemainingPicks.push(pick); continue; }
+
                 if (pick.player.position.isInCategory(requirement.category)) {
                     picksSatisfyingRequirement.push(pick);
                     continue;

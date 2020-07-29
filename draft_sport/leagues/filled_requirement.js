@@ -35,5 +35,7 @@ class FilledRequirement {
     get isNotEmpty() { return !this.isEmpty; }
     get isSatisfied() { return this._picks.length == this._requirement.count; }
     get isNotSatisfied() { return !this.isSatisfied; }
+    get isOverloaded() { return this._picks.length > this._requirement.count; }
+    get isUnderloaded() { return this._picks.length < this._requirement.count; }
 
 }
