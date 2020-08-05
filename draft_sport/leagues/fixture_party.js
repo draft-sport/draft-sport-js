@@ -4,14 +4,16 @@
 class FixtureParty {
 
     constructor(
-        teamName,       // String
+        teamName,       // Optional<String>
         managerName,    // String
-        managerId      // String
+        managerId,      // String
+        totalScore      // Optional<Integer>
     ) {
 
         this._teamName = teamName;
         this._managerName = managerName;
         this._managerId = managerId
+        this._totalScore = totalScore;
 
         return;
 
@@ -23,12 +25,14 @@ class FixtureParty {
     }
     get managerName() { return this._managerName; }
     get managerId() { return this._managerId; }
+    get totalScore() { return this._totalScore; }
 
     static decode(data) {
         return new FixtureParty(
             data['team_name'],
             data['manager_name'],
-            data['manager_public_id']
+            data['manager_public_id'],
+            data['total_score']
         )
     }
     
