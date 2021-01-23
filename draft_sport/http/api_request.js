@@ -10,6 +10,9 @@ class ApiRequest {
     static get _KEY_HEADER() { return 'x-draft-sport-api-key'; }
     static get _SESSION_ID_HEADER() { return 'x-draft-sport-session-id'; }
     static get _JSON_HEADER() { return 'application/json;charset=UTF-8'; }
+    static get _COOKIE_DEV_HEADER() {
+        return 'x-draft-sport-cookie-dev-override';
+    }
 
     static make(
         path,               // String e.g. '/humans'
@@ -32,7 +35,7 @@ class ApiRequest {
         }
 
         const request = new XMLHttpRequest();
-        if (GLOBAL_DEBUG_FLAG === true) { request.withCredentials = true; }
+        request.withCredentials = 'omit';
 
         const summary = {
             requestData: data ? JSON.stringify(data) : null,
@@ -56,6 +59,15 @@ class ApiRequest {
 
         request.open(method, url, true);
 
+        if (typeof(DEVELOPMENT_CORS) !== 'undefined') {
+            if (DEVELOPMENT_CORS) {
+                request.setRequestHeader(
+                    'x-draft-sport-development-cors',
+                    DEVELOPMENT_CORS
+                );
+            }
+        }
+
         function applyAuth() {
             if (withoutAuth) { return; }
             const apiKey = Self._chooseApiKey(session, optionalAuth);
@@ -67,6 +79,9 @@ class ApiRequest {
         }
 
         applyAuth();
+
+        console.log('Apply Cookie Override')
+        Self._applyCookieOverride(path, request);
 
         if (data) {
             request.setRequestHeader('content-type', Self._JSON_HEADER);
@@ -119,7 +134,6 @@ class ApiRequest {
 
 
             try {
-                console.log(request.responseText);
                 errorContent = JSON.parse(request.responseText);
             } catch (error) {
                 const e = new ApiError(
@@ -168,6 +182,19 @@ bal scope or supply Session instance to ApiRequest.make()');
         throw Error('No API endpoint available. Define `GLOBAL_API_ENDPOINT in \
 global scope or supply String apiEndpoint parameter to ApiRequest.make()');
     }
+
+    static _applyCookieOverride(path, request) {
+        if (path.indexOf(Session.PATH) < 0) { return; }
+        const Self = ApiRequest;
+        if (
+            (typeof(GLOBAL_COOKIE_DEV_OVERRIDE) != 'undefined')
+            && (GLOBAL_COOKIE_DEV_OVERRIDE == true)
+        ) {
+            request.setRequestHeader(Self._COOKIE_DEV_HEADER, '1');
+        }
+        return;
+    }
+
 
     static decodeResponse(
         error,      // Error?

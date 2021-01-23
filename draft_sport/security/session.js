@@ -4,6 +4,7 @@
 class Session {
 
     static get _PATH() { return '/session'; }
+    static get PATH() { return Session._PATH; }
 
     constructor(
         sessionId,  //String
