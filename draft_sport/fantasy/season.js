@@ -24,10 +24,12 @@ class FantasySeason {
 
     static get DRAFT_RUGBY_2020() { return _CONSTANT_SEASON_2020_1; }
     static get DRAFT_RUGBY_2020_PRE_COVID() { return _CONSTANT_SEASON_2020_2; }
+    static get DRAFT_RUGBY_2021() { return _CONSTANT_SEASON_2021; }
 
     static get _CONSTANTS() { return [
         FantasySeason.DRAFT_RUGBY_2020,
-        FantasySeason.DRAFT_RUGBY_2020_PRE_COVID
+        FantasySeason.DRAFT_RUGBY_2020_PRE_COVID,
+        FantasySeason.DRAFT_RUGBY_2021
     ]; }
 
     get publicId() { return this._public_id; }
@@ -122,5 +124,15 @@ const _CONSTANT_SEASON_2020_2 = new FantasySeason(
     new FantasyCompetition(
         'sru_2020_1',
         'Draft Rugby 2020 (Pre-Covid)'
+    )
+);
+
+const _CONSTANT_SEASON_2021 = new FantasySeason(
+    'draft_rugby_2021',
+    'Draft Rugby 2021',
+    '25 Feb 2020',
+    new FantasyCompetition(
+        'sru_2021',
+        'Draft Rugby 2021'
     )
 );
